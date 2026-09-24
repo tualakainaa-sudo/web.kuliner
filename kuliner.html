@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dapur Rasa Kupang - Kuliner Khas NTT Otentik</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Plus Jakarta Sans & Playfair Display) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            orange: '#E65100',
+                            terracotta: '#C62828',
+                            amber: '#F57C00',
+                            cream: '#FFF8F0',
+                            dark: '#2C1810',
+                            sand: '#F4E8D1'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom scrollbar and animations */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFF8F0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E65100;
+            border-radius: 4px;
+        }
+        .hero-bg {
+            background: linear-gradient(180deg, rgba(44, 24, 16, 0.75) 0%, rgba(44, 24, 16, 0.85) 100%), 
+                        url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+        }
+        .tenun-pattern {
+            background-color: #FFF8F0;
+            background-image: opacity 0.05;
+        }
+    </style>
+</head>
+<body class="bg-brand-cream text-brand-dark font-sans antialiased overflow-x-hidden selection:bg-brand-amber selection:text-white">
+
+    <!-- NAVBAR -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 bg-brand-dark/90 backdrop-blur-md border-b border-brand-amber/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-terracotta to-brand-amber flex items-center justify-center text-white font-serif font-bold text-xl shadow-lg transform group-hover:rotate-12 transition-transform">
+                        K
+                    </div>
+                    <div>
+                        <span class="font-serif font-bold text-xl sm:text-2xl text-white tracking-wide block leading-none">Dapur Rasa</span>
+                        <span class="text-xs font-semibold text-brand-amber tracking-widest uppercase block mt-1">Kupang Otentik</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-gray-200 hover:text-brand-amber font-medium transition-colors">Beranda</a>
+                    <a href="#tentang" class="text-gray-200 hover:text-brand-amber font-medium transition-colors">Tentang Kami</a>
+                    <a href="#menu" class="text-gray-200 hover:text-brand-amber font-medium transition-colors">Menu Unggulan</a>
+                    <a href="#testimoni" class="text-gray-200 hover:text-brand-amber font-medium transition-colors">Testimoni</a>
+                    <a href="#kontak" class="text-gray-200 hover:text-brand-amber font-medium transition-colors">Lokasi & Kontak</a>
+                </div>
+
+                <!-- Action Button & Cart Toggle -->
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleCart()" class="relative p-2.5 rounded-full bg-brand-orange/20 text-brand-cream hover:bg-brand-orange hover:text-white transition-all focus:outline-none" aria-label="Keranjang Belanja">
+                        <i class="fa-solid fa-cart-shopping text-lg"></i>
+                        <span id="cart-badge" class="absolute -top-1 -right-1 bg-brand-terracotta text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center hidden border-2 border-brand-dark">0</span>
+                    </button>
+                    
+                    <a href="#menu" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-gradient-to-r from-brand-orange to-brand-amber text-white font-semibold text-sm shadow-md hover:shadow-lg hover:brightness-110 transition-all transform hover:-translate-y-0.5">
+                        Pesan Sekarang
+                    </a>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white p-2 rounded-lg focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-dark border-b border-brand-amber/20 px-4 pt-2 pb-6 space-y-3">
+            <a href="#home" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:bg-brand-orange/20 hover:text-brand-amber">Beranda</a>
+            <a href="#tentang" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:bg-brand-orange/20 hover:text-brand-amber">Tentang Kami</a>
+            <a href="#menu" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:bg-brand-orange/20 hover:text-brand-amber">Menu Unggulan</a>
+            <a href="#testimoni" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:bg-brand-orange/20 hover:text-brand-amber">Testimoni</a>
+            <a href="#kontak" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:bg-brand-orange/20 hover:text-brand-amber">Lokasi & Kontak</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="relative hero-bg min-h-screen flex items-center pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6 text-center md:text-left">
+                <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-brand-orange/30 border border-brand-amber/40 text-brand-amber text-xs sm:text-sm font-semibold tracking-wide backdrop-blur-sm">
+                    <i class="fa-solid fa-fire text-brand-amber"></i>
+                    <span>Cita Rasa Khas Nusa Tenggara Timur</span>
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif font-extrabold text-white leading-tight">
+                    Keatentikan Se'i Sapi & Kuliner <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-amber via-yellow-400 to-orange-500">Kupang Pilihan</span>
+                </h1>
+                <p class="text-lg text-gray-300 max-w-xl mx-auto md:mx-0 font-normal leading-relaxed">
+                    Nikmati sensasi daging asap khas Kupang yang diolah dengan rempah warisan leluhur. Lezat, segar, dan siap diantar langsung ke meja Anda.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 pt-4">
+                    <a href="#menu" class="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-brand-terracotta via-brand-orange to-brand-amber text-white font-bold text-base shadow-lg shadow-brand-terracotta/30 hover:shadow-brand-orange/50 hover:scale-105 transition-all text-center">
+                        <i class="fa-solid fa-utensils mr-2"></i>Lihat Menu Unggulan
+                    </a>
+                    <a href="https://wa.me/6281234567890?text=Halo%20Dapur%20Rasa%20Kupang,%20saya%20ingin%20bertanya%20mengenai%20menu." target="_blank" class="w-full sm:w-auto px-8 py-4 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-base backdrop-blur-md border border-white/20 hover:border-white/40 transition-all text-center">
+                        <i class="fa-brands fa-whatsapp text-green-400 mr-2"></i>Tanya via WhatsApp
+                    </a>
+                </div>
+                <!-- Trust Badges -->
+                <div class="pt-8 border-t border-white/10 grid grid-cols-3 gap-4 text-center md:text-left text-gray-300 text-xs sm:text-sm">
+                    <div>
+                        <div class="font-bold text-white text-lg sm:text-xl">100%</div>
+                        <div class="text-gray-400">Daging Halal & Fresh</div>
+                    </div>
+                    <div>
+                        <div class="font-bold text-white text-lg sm:text-xl">Asli</div>
+                        <div class="text-gray-400">Kayu Kesambi Asli</div>
+                    </div>
+                    <div>
+                        <div class="font-bold text-white text-lg sm:text-xl">4.9 ★</div>
+                        <div class="text-gray-400">Rating Pelanggan</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Image Visual Banner -->
+            <div class="relative flex justify-center">
+                <div class="relative w-full max-w-md lg:max-w-lg aspect-square rounded-3xl overflow-hidden shadow-2xl border-4 border-brand-amber/30">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80" alt="Sei Sapi Kupang Special" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6">
+                        <span class="bg-brand-terracotta text-white text-xs font-bold px-3 py-1 rounded-full w-max mb-2">Paling Dicari!</span>
+                        <h3 class="text-white font-serif font-bold text-2xl">Se'i Sapi Sambal Lu'at</h3>
+                        <p class="text-gray-300 text-sm">Aroma asap kayu kesambi dipadu sambal pedas asam khas NTT.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TENTANG KAMI SECTION -->
+    <section id="tentang" class="py-20 px-4 sm:px-6 lg:px-8 bg-white relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80" alt="Suasana Dapur Kuliner" class="rounded-2xl shadow-md w-full h-64 object-cover transform -rotate-2 hover:rotate-0 transition-transform">
+                        <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=600&q=80" alt="Hidangan Kuliner Kupang" class="rounded-2xl shadow-md w-full h-64 object-cover mt-8 transform rotate-2 hover:rotate-0 transition-transform">
+                    </div>
+                    <!-- Badge Overlay -->
+                    <div class="absolute -bottom-6 right-6 bg-brand-orange text-white p-4 rounded-2xl shadow-xl font-serif text-center hidden sm:block">
+                        <span class="block text-3xl font-bold">10+</span>
+                        <span class="text-xs uppercase tracking-wider">Tahun Resep Warisan</span>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="inline-block px-3 py-1 bg-brand-sand text-brand-terracotta font-bold text-xs uppercase tracking-wider rounded-full">
+                        Cerita & Keotentikan
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-serif font-bold text-brand-dark">
+                        Membawa Kehangatan Kuliner Timor Langsung ke Meja Anda
+                    </h2>
+                    <p class="text-gray-600 leading-relaxed">
+                        <strong>Dapur Rasa Kupang</strong> berawal dari kerinduan akan keatentikan cita rasa tanah Flobamora. Kami melestarikan teknik pengasapan tradisional menggunakan <em>kayu kesambi</em> dan daun kosambi yang memberikan aroma khas yang tidak bisa ditemukan di tempat lain.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed">
+                        Dipadukan dengan rempah-rempah pilihan serta <strong>Sambal Lu'at</strong> fermented khas NTT yang memberikan rasa pedas, gurih, dan sentuhan asam segar dari jeruk nipis & daun kemangi.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 pt-2">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 rounded-full bg-brand-cream text-brand-orange flex items-center justify-center font-bold flex-shrink-0">✓</div>
+                            <p class="text-sm font-semibold text-brand-dark">Bumbu Asli Impor Langsung dari NTT</p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 rounded-full bg-brand-cream text-brand-orange flex items-center justify-center font-bold flex-shrink-0">✓</div>
+                            <p class="text-sm font-semibold text-brand-dark">Proses Pengasapan Higienis 8 Jam</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENU UNGGULAN SECTION -->
+    <section id="menu" class="py-20 px-4 sm:px-6 lg:px-8 bg-brand-cream">
+        <div class="max-w-7xl mx-auto">
+            <!-- Section Title -->
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-brand-orange font-bold text-xs uppercase tracking-widest block mb-2">Pilihan Terbaik</span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold text-brand-dark">Menu Pilihan Dapur Kami</h2>
+                <p class="text-gray-600 mt-3">Jelajahi kelezatan se'i sapi, makanan khas, dan minuman segar penutup dahaga.</p>
+            </div>
+
+            <!-- Filter Categories -->
+            <div class="flex flex-wrap justify-center gap-2 sm:gap-4 mb-10">
+                <button onclick="filterMenu('all')" class="filter-btn active px-6 py-2.5 rounded-full text-sm font-bold transition-all bg-brand-orange text-white shadow-md" data-category="all">
+                    Semua Menu
+                </button>
+                <button onclick="filterMenu('makanan')" class="filter-btn px-6 py-2.5 rounded-full text-sm font-bold transition-all bg-white text-gray-700 hover:bg-brand-sand" data-category="makanan">
+                    Makanan Utama
+                </button>
+                <button onclick="filterMenu('minuman')" class="filter-btn px-6 py-2.5 rounded-full text-sm font-bold transition-all bg-white text-gray-700 hover:bg-brand-sand" data-category="minuman">
+                    Minuman & Segar
+                </button>
+                <button onclick="filterMenu('paket')" class="filter-btn px-6 py-2.5 rounded-full text-sm font-bold transition-all bg-white text-gray-700 hover:bg-brand-sand" data-category="paket">
+                    Paket Hemat
+                </button>
+            </div>
+
+            <!-- Menu Grid -->
+            <div id="menu-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Javascript will populate cards dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONI SECTION -->
+    <section id="testimoni" class="py-20 px-4 sm:px-6 lg:px-8 bg-brand-dark text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-brand-amber font-bold text-xs uppercase tracking-widest block mb-2">Ulasan Pelanggan</span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold">Apa Kata Mereka?</h2>
+                <p class="text-gray-400 mt-2">Kepuasan pelanggan adalah kebanggaan utama kami.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white/5 border border-white/10 p-6 rounded-2xl backdrop-blur-sm relative flex flex-col justify-between">
+                    <div>
+                        <div class="flex text-yellow-400 space-x-1 mb-4">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-gray-300 italic text-sm leading-relaxed mb-6">
+                            "Aroma asap Se'i Sapi-nya bener-bener meresap sampai ke serat daging terdalam! Sambal lu'at-nya luar biasa pedas asam segar. Kangen Kupang langsung terobati!"
+                        </p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Pelanggan 1" class="w-12 h-12 rounded-full object-cover border-2 border-brand-amber">
+                        <div>
+                            <h4 class="font-bold text-sm text-white">Maria B. Tukan</h4>
+                            <span class="text-xs text-gray-400">Pencinta Kuliner NTT</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-white/5 border border-white/10 p-6 rounded-2xl backdrop-blur-sm relative flex flex-col justify-between">
+                    <div>
+                        <div class="flex text-yellow-400 space-x-1 mb-4">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-gray-300 italic text-sm leading-relaxed mb-6">
+                            "Paket Rame-Rame recommended banget buat makan keluarga. Jagung bose-nya pulen dan gurih. Pengiriman cepat dan dikemas rapi terlindungi."
+                        </p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Pelanggan 2" class="w-12 h-12 rounded-full object-cover border-2 border-brand-amber">
+                        <div>
+                            <h4 class="font-bold text-sm text-white">Budi Santoso</h4>
+                            <span class="text-xs text-gray-400">Pelanggan Setia</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-white/5 border border-white/10 p-6 rounded-2xl backdrop-blur-sm relative flex flex-col justify-between">
+                    <div>
+                        <div class="flex text-yellow-400 space-x-1 mb-4">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-gray-300 italic text-sm leading-relaxed mb-6">
+                            "Es Kelapa Muda Lontar-nya sangat menyegarkan! Paduan gula air lontar asli Kupang bikin rasanya beda dari es kelapa biasa."
+                        </p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" alt="Pelanggan 3" class="w-12 h-12 rounded-full object-cover border-2 border-brand-amber">
+                        <div>
+                            <h4 class="font-bold text-sm text-white">Siti Rahma</h4>
+                            <span class="text-xs text-gray-400">Food Blogger</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOKASI & KONTAK SECTION -->
+    <section id="kontak" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Contact Details -->
+                <div class="space-y-8">
+                    <div>
+                        <span class="text-brand-orange font-bold text-xs uppercase tracking-widest block mb-2">Kunjungi Kami</span>
+                        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-brand-dark">Lokasi & Jam Operasional</h2>
+                        <p class="text-gray-600 mt-2">Singgah dan rasakan langsung kehangatan sajian kami di kedai atau pesan antar.</p>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 rounded-2xl bg-brand-sand/50 text-brand-orange flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-brand-dark text-lg">Alamat Kedai</h4>
+                                <p class="text-gray-600 text-sm mt-1">Jl. El Tari No. 45, Oebobo, Kota Kupang, Nusa Tenggara Timur</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 rounded-2xl bg-brand-sand/50 text-brand-orange flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-brand-dark text-lg">Jam Buka</h4>
+                                <p class="text-gray-600 text-sm mt-1">Senin - Minggu: 10.00 - 22.00 WITA</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 rounded-2xl bg-brand-sand/50 text-brand-orange flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-brand-dark text-lg">Kontak & Reservasi</h4>
+                                <p class="text-gray-600 text-sm mt-1">+62 812-3456-7890 (WhatsApp)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Media Links -->
+                    <div class="pt-4">
+                        <h4 class="font-bold text-brand-dark text-sm uppercase tracking-wider mb-4">Ikuti Media Sosial Kami</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 rounded-full bg-brand-cream text-brand-dark hover:bg-brand-orange hover:text-white flex items-center justify-center transition-colors">
+                                <i class="fa-brands fa-instagram text-lg"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-brand-cream text-brand-dark hover:bg-brand-orange hover:text-white flex items-center justify-center transition-colors">
+                                <i class="fa-brands fa-facebook-f text-lg"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-brand-cream text-brand-dark hover:bg-brand-orange hover:text-white flex items-center justify-center transition-colors">
+                                <i class="fa-brands fa-tiktok text-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mockup Map UI -->
+                <div class="bg-gray-100 rounded-3xl overflow-hidden shadow-lg border border-gray-200 relative min-h-[350px] flex items-center justify-center">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3927.214828131557!2d123.608333!3d-10.160278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTDCsDA5JzM3LjAiUyAxMjPCsDM2JzMwLjAiRQ!5e0!3m2!1sid!2sid!4v1620000000000!5m2!1sid!2sid" class="w-full h-full absolute inset-0 border-0" allowfullscreen="" loading="lazy"></iframe>
+                    <div class="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-4 rounded-xl shadow-md border border-gray-100 flex justify-between items-center">
+                        <div>
+                            <span class="text-xs font-bold text-brand-orange block">Petunjuk Arah</span>
+                            <span class="text-sm font-semibold text-gray-800">Dapur Rasa Kupang Pusat</span>
+                        </div>
+                        <a href="https://maps.google.com" target="_blank" class="px-4 py-2 bg-brand-orange text-white text-xs font-bold rounded-lg shadow hover:bg-brand-terracotta transition-colors">
+                            Buka Maps
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-brand-dark text-gray-400 py-8 border-t border-white/10 text-center text-sm">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>&copy; 2026 Dapur Rasa Kupang. Hak Cipta Dilindungi Undang-Undang.</p>
+            <p class="text-xs text-gray-500 mt-1">Dibuat dengan rasa cinta untuk Kuliner Tradisional Nusantara.</p>
+        </div>
+    </footer>
+
+    <!-- SHOPPING CART DRAWER (MODAL) -->
+    <div id="cart-drawer-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/60 z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    
+    <div id="cart-drawer" class="fixed top-0 right-0 bottom-0 w-full max-w-md bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+        <!-- Drawer Header -->
+        <div class="p-6 bg-brand-dark text-white flex justify-between items-center border-b border-white/10">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-basket-shopping text-brand-amber text-xl"></i>
+                <h3 class="font-serif font-bold text-xl">Keranjang Belanja</h3>
+            </div>
+            <button onclick="toggleCart()" class="text-gray-400 hover:text-white p-2 text-xl focus:outline-none">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- Drawer Cart Items list -->
+        <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <!-- Dynamic Cart Items JS rendering -->
+        </div>
+
+        <!-- Drawer Footer / Summary -->
+        <div class="p-6 bg-brand-cream border-t border-gray-200 space-y-4">
+            <div class="space-y-2">
+                <div class="flex justify-between text-sm text-gray-600">
+                    <span>Subtotal:</span>
+                    <span id="cart-subtotal" class="font-semibold text-gray-800">Rp 0</span>
+                </div>
+                <div class="flex justify-between text-base font-bold text-brand-dark pt-2 border-t border-gray-200">
+                    <span>Total Estimasi:</span>
+                    <span id="cart-total" class="text-xl text-brand-terracotta">Rp 0</span>
+                </div>
+            </div>
+
+            <!-- WhatsApp Checkout Button -->
+            <button onclick="checkoutWhatsApp()" class="w-full py-4 rounded-xl bg-green-600 hover:bg-green-700 text-white font-bold flex items-center justify-center space-x-2 shadow-lg transition-all transform active:scale-98">
+                <i class="fa-brands fa-whatsapp text-2xl"></i>
+                <span>Lanjut ke WhatsApp</span>
+            </button>
+            <p class="text-xs text-center text-gray-500">Pemesanan diproses langsung melalui WhatsApp Resmi kedai.</p>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-brand-dark text-white px-6 py-3 rounded-2xl shadow-2xl z-50 flex items-center space-x-3 transform translate-y-24 opacity-0 transition-all duration-300">
+        <i class="fa-solid fa-circle-check text-green-400 text-xl"></i>
+        <span id="toast-message" class="text-sm font-medium">Menu telah ditambahkan ke keranjang</span>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Data Menu Kuliner Kupang
+        const menuData = [
+            {
+                id: 1,
+                title: "Se'i Sapi Sambal Lu'at",
+                category: "makanan",
+                price: 45000,
+                description: "Daging sapi asap khas Kupang dipadu Sambal Lu'at (pedas, asam jeruk nipis, kemangi).",
+                image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80",
+                badge: "Terfavorit"
+            },
+            {
+                id: 2,
+                title: "Jagung Bose Komplit",
+                category: "makanan",
+                price: 25000,
+                description: "Bubur jagung tradisional khas NTT dimasak dengan santan & kacang merah, disajikan hangat.",
+                image: "https://images.unsplash.com/photo-1541832676-9b763b0239ab?auto=format&fit=crop&w=600&q=80",
+                badge: "Otentik"
+            },
+            {
+                id: 3,
+                title: "Lontong Kupang Spesial",
+                category: "makanan",
+                price: 30000,
+                description: "Sajian lontong dengan petis khas, sate kerang, dan taburan bawang goreng gurih.",
+                image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80",
+                badge: "Khas Timor"
+            },
+            {
+                id: 4,
+                title: "Se'i Ayam Asap",
+                category: "makanan",
+                price: 35000,
+                description: "Dada ayam empuk dengan aroma asap kayu kesambi dan pilihan sambal matah/lu'at.",
+                image: "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 5,
+                title: "Es Kelapa Muda Lontar",
+                category: "minuman",
+                price: 15000,
+                description: "Daging kelapa muda segar disiram sirup gula lontar asli Kupang dan es batu.",
+                image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80",
+                badge: "Segar"
+            },
+            {
+                id: 6,
+                title: "Es Teh Manis Gula Timor",
+                category: "minuman",
+                price: 8000,
+                description: "Teh racikan melati dingin dengan pemanis gula kelapa alami khas Kupang.",
+                image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 7,
+                title: "Paket Kenyag Se'i (1 Org)",
+                category: "paket",
+                price: 52000,
+                description: "Se'i Sapi + Nasi Putih + Tumis Daun Singkong + Es Kelapa Muda Lontar.",
+                image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80",
+                badge: "Hemat"
+            },
+            {
+                id: 8,
+                title: "Paket Rame-Rame Flobamora",
+                category: "paket",
+                price: 135000,
+                description: "2 Porsi Se'i Sapi + 1 Jagung Bose + 2 Nasi + 2 Es Kelapa Muda (Cukup untuk 3 Orang).",
+                image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80",
+                badge: "Best Seller"
+            }
+        ];
+
+        // State Keranjang Belanja
+        let cart = [];
+
+        // Format Rupiah Helper
+        function formatRupiah(amount) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(amount);
+        }
+
+        // Render Cards Menu
+        function renderMenu(category = 'all') {
+            const grid = document.getElementById('menu-grid');
+            grid.innerHTML = '';
+
+            const filteredMenu = category === 'all' 
+                ? menuData 
+                : menuData.filter(item => item.category === category);
+
+            filteredMenu.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between border border-gray-100 group';
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="relative overflow-hidden aspect-video">
+                            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            ${item.badge ? `<span class="absolute top-4 left-4 bg-brand-terracotta text-white text-xs font-bold px-3 py-1 rounded-full shadow">${item.badge}</span>` : ''}
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif font-bold text-xl text-brand-dark mb-2">${item.title}</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-4">${item.description}</p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0 flex items-center justify-between border-t border-gray-50 mt-auto">
+                        <span class="text-lg font-bold text-brand-terracotta">${formatRupiah(item.price)}</span>
+                        <button onclick="addToCart(${item.id})" class="px-4 py-2.5 rounded-full bg-brand-orange text-white text-sm font-semibold hover:bg-brand-terracotta transition-colors shadow-sm flex items-center space-x-2">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Tambah</span>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter Functionality
+        function filterMenu(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.getAttribute('data-category') === category) {
+                    btn.classList.add('bg-brand-orange', 'text-white', 'shadow-md');
+                    btn.classList.remove('bg-white', 'text-gray-700');
+                } else {
+                    btn.classList.remove('bg-brand-orange', 'text-white', 'shadow-md');
+                    btn.classList.add('bg-white', 'text-gray-700');
+                }
+            });
+            renderMenu(category);
+        }
+
+        // Add to Cart Logic
+        function addToCart(id) {
+            const menuItem = menuData.find(item => item.id === id);
+            const existingItem = cart.find(item => item.id === id);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...menuItem, quantity: 1 });
+            }
+
+            updateCartUI();
+            showToast(`"${menuItem.title}" ditambahkan ke keranjang!`);
+        }
+
+        // Update Cart Quantity
+        function updateQuantity(id, delta) {
+            const item = cart.find(item => item.id === id);
+            if (!item) return;
+
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                cart = cart.filter(i => i.id !== id);
+            }
+            updateCartUI();
+        }
+
+        // Update Cart UI Drawer & Badges
+        function updateCartUI() {
+            const cartContainer = document.getElementById('cart-items-container');
+            const cartBadge = document.getElementById('cart-badge');
+            const subtotalEl = document.getElementById('cart-subtotal');
+            const totalEl = document.getElementById('cart-total');
+
+            const totalCount = cart.reduce((sum, item) => sum += item.quantity, 0);
+            const totalCost = cart.reduce((sum, item) => sum += (item.price * item.quantity), 0);
+
+            // Badge count
+            if (totalCount > 0) {
+                cartBadge.innerText = totalCount;
+                cartBadge.classList.remove('hidden');
+            } else {
+                cartBadge.classList.add('hidden');
+            }
+
+            // Render items
+            if (cart.length === 0) {
+                cartContainer.innerHTML = `
+                    <div class="text-center py-12 text-gray-400 space-y-3">
+                        <i class="fa-solid fa-basket-shopping text-5xl"></i>
+                        <p class="text-sm">Keranjang Anda masih kosong.</p>
+                    </div>
+                `;
+            } else {
+                cartContainer.innerHTML = '';
+                cart.forEach(item => {
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'flex items-center justify-between p-3 bg-brand-cream/60 rounded-2xl border border-gray-100';
+                    itemEl.innerHTML = `
+                        <div class="flex items-center space-x-3">
+                            <img src="${item.image}" alt="${item.title}" class="w-14 h-14 rounded-xl object-cover">
+                            <div>
+                                <h4 class="font-bold text-sm text-brand-dark">${item.title}</h4>
+                                <span class="text-xs text-brand-terracotta font-semibold">${formatRupiah(item.price)}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2 bg-white px-2 py-1 rounded-xl shadow-sm border border-gray-100">
+                            <button onclick="updateQuantity(${item.id}, -1)" class="w-6 h-6 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 flex items-center justify-center font-bold text-xs">-</button>
+                            <span class="text-xs font-bold px-1">${item.quantity}</span>
+                            <button onclick="updateQuantity(${item.id}, 1)" class="w-6 h-6 rounded-lg bg-brand-orange text-white hover:bg-brand-terracotta flex items-center justify-center font-bold text-xs">+</button>
+                        </div>
+                    `;
+                    cartContainer.appendChild(itemEl);
+                });
+            }
+
+            subtotalEl.innerText = formatRupiah(totalCost);
+            totalEl.innerText = formatRupiah(totalCost);
+        }
+
+        // Toggle Cart Drawer
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('cart-drawer-overlay');
+
+            if (drawer.classList.contains('translate-x-full')) {
+                drawer.classList.remove('translate-x-full');
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                drawer.classList.add('translate-x-full');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        // Show Notification Toast
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.innerText = msg;
+
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 2500);
+        }
+
+        // WhatsApp Checkout Formatting
+        function checkoutWhatsApp() {
+            if (cart.length === 0) {
+                alert('Keranjang Anda masih kosong. Silahkan pilih menu terlebih dahulu!');
+                return;
+            }
+
+            const phoneNumber = "6281234567890"; // Nomor WhatsApp UMKM
+            let message = "*HALO DAPUR RASA KUPANG, SAYA INGIN MEMESAN:*\n\n";
+
+            cart.forEach((item, index) => {
+                message += `${index + 1}. *${item.title}* (${item.quantity}x) - ${formatRupiah(item.price * item.quantity)}\n`;
+            });
+
+            const totalCost = cart.reduce((sum, item) => sum += (item.price * item.quantity), 0);
+            message += `\n*TOTAL BELANJA:* ${formatRupiah(totalCost)}\n`;
+            message += `\n*Detail Pengiriman:*`;
+            message += `\n- Nama: `;
+            message += `\n- Alamat Lengkap: `;
+            message += `\n- Catatan Tambahan: \n\nMohon konfirmasi pesanan dan instruksi pembayaran. Terima kasih!`;
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+        }
+
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Initialize App on Load
+        window.onload = function() {
+            renderMenu('all');
+            updateCartUI();
+        };
+    </script>
+</body>
+</html>
